@@ -3,6 +3,7 @@ package tacos.web;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import tacos.Ingredient;
 import tacos.Taco;
@@ -18,6 +19,7 @@ import static tacos.Ingredient.Type;
 @RequestMapping("/design")
 public class DesignTacoController {
 
+    @GetMapping
     public String showDesignForm(Model model) {
         List<Ingredient> ingredients = Arrays.asList(
                 new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
