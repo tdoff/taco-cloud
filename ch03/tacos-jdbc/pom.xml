@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>sia</groupId>
-    <artifactId>taco-cloud</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>taco-cloud</name>
+    <artifactId>tacos-jdbc</artifactId>
+    <version>0.0.3-SNAPSHOT</version>
+    <name>tacos-jdbc</name>
     <description>Taco Cloud Example</description>
 
     <properties>
@@ -54,6 +54,17 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
