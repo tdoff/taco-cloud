@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import tacos.Ingredient;
 import tacos.Order;
 import tacos.Taco;
@@ -25,6 +26,7 @@ import static tacos.Ingredient.Type;
 @Slf4j
 @Controller
 @RequestMapping("/design")
+@SessionAttributes("order")
 public class DesignTacoController {
 
     private final IngredientRepository ingredientRepo;
@@ -37,8 +39,8 @@ public class DesignTacoController {
         this.designRepo = designRepo;
     }
 
-    @ModelAttribute
-    public void addIngredientsToModel(Model model) {
+    @GetMapping
+    public String showDesignForm(Model model) {
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientRepo.findAll().forEach(ingredients::add);
 
@@ -47,11 +49,6 @@ public class DesignTacoController {
         for (Type type : types) {
             model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
         }
-    }
-
-    @GetMapping
-    public String showDesignForm(Model model) {
-        model.addAttribute("design", new Taco());
         return "design";
     }
 
@@ -66,14 +63,14 @@ public class DesignTacoController {
     }
 
     @PostMapping
-    public String processDesign(@Valid @ModelAttribute("design") Taco design, Errors errors,
+    public String processDesign(@Valid Taco design, Errors errors,
                                 @ModelAttribute Order order) {
         if (errors.hasErrors()) {
             return "design";
         }
 
         Taco saved = designRepo.save(design);
-        order.addDesign(saved);//todo class level annotation attention!
+        order.addDesign(saved);
 
         return "redirect:/orders/current";
     }
